@@ -1,2 +1,2 @@
-# Prog1_2023_Exercises
-This repository constains the exercises from the Game Programming 1 class.
+# Programming 1 - 2023 - Exercises
+This repository constains the exercises from the Game Programming 1 class developed in Unity.
