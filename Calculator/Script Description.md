@@ -1,2 +1,2 @@
 # Calculator
-Prints to the console a string from a void fuction. Next call the add and subtract methods with custom values (arguments) by the user inside Unity.
+Prints to the console a string from a void function. Next, calls the Add and Subtract methods with custom values (arguments) given by the user inside Unity.
