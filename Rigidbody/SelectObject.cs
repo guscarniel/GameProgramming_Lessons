@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SelectObject : MonoBehaviour
 {
-    //this script is an empty component
+    //this script will be a component of an empty
 
     [SerializeField] private GameObject[] selectableObjects; //array of Gameobjects to be selected
 
