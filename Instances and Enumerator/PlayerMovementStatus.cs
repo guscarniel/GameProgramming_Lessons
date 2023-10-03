@@ -4,42 +4,35 @@ using UnityEngine;
 
 public class PlayerMovementStatus : MonoBehaviour
 {
-    // Using _ for all private variables
+    [SerializeField] private float velocity = 5;
+    Rigidbody rb;
+    float axisX;
+    float axisY;
 
-    [SerializeField] private float _velocity = 5;
-    private Rigidbody _rigidbody;
-    float _axisX;
-    float _axisY;
-
+    //these status will change when touching game objects
     enum Status { Normal, Blue, Green, Red };
     Status status;
 
-    // Start is called before the first frame update
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    //always calling the function
     private void Update()
     {
         GetDirections();
     }
 
-    // Getting the input
     private void GetDirections()
     {
-        _axisX = Input.GetAxis("Horizontal");
-        _axisY = Input.GetAxis("Vertical");
+        axisX = Input.GetAxis("Horizontal");
+        axisY = Input.GetAxis("Vertical");
     }
 
     private void FixedUpdate()
     {
-        // Instancing Vector3 and passing the inputs as arguments for the translate
-        Vector3 direction = new Vector3(_axisX, 0, _axisY);
-
-        // MovePosition is a property of the RigidBody
-        _rigidbody.MovePosition(_rigidbody.position + direction * _velocity * Time.deltaTime);
+        Vector3 direction = new Vector3(axisX, 0, axisY);
+        rb.MovePosition(rb.position + direction * velocity * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -69,7 +62,7 @@ public class PlayerMovementStatus : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        // Default color
+        //default color
         status = Status.Normal;
         Debug.Log(status);
         GetComponent<Renderer>().material.color = Color.white;
