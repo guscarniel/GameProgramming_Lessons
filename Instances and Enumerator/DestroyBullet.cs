@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class DestroyBullet : MonoBehaviour
 {
+    //this script is attached to the bullet target
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Bullet") //destroy everytime a bullet collides with something
+        if (collision.gameObject.CompareTag ("Bullet")) //destroy the bullet everytime it collides with something
         {
             Destroy(collision.gameObject);
         }
