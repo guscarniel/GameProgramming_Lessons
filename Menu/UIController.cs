@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-
     [SerializeField] string PrintCustomText = "Default text";
+    [SerializeField] TMP_InputField inputField; //UI element from the UI library
+
     [SerializeField] GameObject panelOne;
     [SerializeField] GameObject panelTwo;
     [SerializeField] GameObject panelThree;
+    [SerializeField] GameObject panelFour;
+    [SerializeField] GameObject panelFive;
 
-    [SerializeField] TMP_InputField inputField; //UI element from the UI library
-
+    [SerializeField] AudioMixer audioMixer;
+    [SerializeField] AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +31,14 @@ public class UIController : MonoBehaviour
         panelOne.SetActive(true);
         panelTwo.SetActive(false);
         panelThree.SetActive(false);
+        panelFour.SetActive(false);
+        panelFive.SetActive(false);
+    }
+
+    public void FullScreen(bool isMax)
+    {
+        Debug.Log(isMax);
+        Screen.fullScreen = isMax;
     }
 
     public void CustomTextLog()
@@ -64,6 +76,18 @@ public class UIController : MonoBehaviour
         panelThree.SetActive(true);
     }
 
+    public void Settings()
+    {
+        panelOne.SetActive(false);
+        panelFive.SetActive(true);
+    }
+
+    public void BackFromSettings()
+    {     
+        panelFive.SetActive(false);
+        panelOne.SetActive(true);
+    }
+
     public void UserConfirm()
     {
         panelTwo.SetActive(false);
@@ -76,9 +100,38 @@ public class UIController : MonoBehaviour
         panelOne.SetActive(true);
     }
 
+    public void QuitConfirm()
+    {
+        panelFour.SetActive(true);
+    }
+
+    public void QuitDeny()
+    {
+        panelFour.SetActive(false);
+        panelOne.SetActive(true);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void Volume(float value)
+    {
+        Debug.Log(value);
+        float convertedVolume = Mathf.Log10(value) * 20f;
+        audioMixer.SetFloat("VolumeSlider", convertedVolume);
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            if (audioSource.isPlaying)
+                audioSource.Pause();
+            else
+                audioSource.Play();
+        }
     }
 }
