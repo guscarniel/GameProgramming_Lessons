@@ -31,6 +31,7 @@ public class AudioPreferences : MonoBehaviour
     {
         Debug.Log(sliderValue);
         float convertedSliderVolume = Mathf.Log10(sliderValue) * 20f;
+        //the value is set on the audio mixer's exposed parameter VolumeSlider
         audioMixer.SetFloat("VolumeSlider", convertedSliderVolume);
         
         //saving the values of volume and the position of the slider with SetFloat
@@ -41,7 +42,7 @@ public class AudioPreferences : MonoBehaviour
     void LoadSettings()
     {
         float previousVolume;
-        //using GetFloat to load VOLUME Registry KEY information
+        //using GetFloat to load VOLUME information on the System Registry
         previousVolume = PlayerPrefs.GetFloat("VOLUME");
         //the value is set on the audio mixer's exposed parameter VolumeSlider
         audioMixer.SetFloat("VolumeSlider", previousVolume);
