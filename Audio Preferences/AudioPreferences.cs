@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AudioPreferences : MonoBehaviour
 {
-    //select the dynamic float volume function inside the slider button
+    //select the dynamic float volume function (event) inside the slider button
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioSource audioSource;
     [SerializeField] Slider volumeSlider;

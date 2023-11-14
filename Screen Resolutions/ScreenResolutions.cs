@@ -27,7 +27,7 @@ public class ScreenResolutions : MonoBehaviour
         //getting the current refresh rate and saving it to a variable of type float
         currentRefreshRate = Screen.currentResolution.refreshRate;
 
-        
+
         //cheking if my current monitor refresh rate is the same as the options in the array
         //if the condition is true, the resolution will be added to the list
         for (int i = 0; i < resolutionArray.Length; i++)
@@ -40,16 +40,16 @@ public class ScreenResolutions : MonoBehaviour
 
         //pasting the list of resolutions to the dropdown
         List<string> screenOptions = new List<string>();
-        
+
         for (int i = 0; i < resolutionList.Count; i++)
         {
             //creating the list of strings that will be printed on the menu and saving them on a variable of type string
             string resolutionStringList = resolutionList[i].width + "x" + resolutionList[i].height + " " + resolutionList[i].refreshRate + "Hz";
-            
+
             //adding the previous string concatenation to the list
             screenOptions.Add(resolutionStringList);
 
-            
+
             //checking if the list matches the resolutions of my monitor
             if (resolutionList[i].width == Screen.width && resolutionList[i].height == Screen.height)
             {
@@ -63,7 +63,7 @@ public class ScreenResolutions : MonoBehaviour
 
         //setting the dropdown value to the current index
         resolutionDropdown.value = currentResolutionIndex;
-        //refreshing values
+        //this is needed to display values
         resolutionDropdown.RefreshShownValue();
 
     }
@@ -73,6 +73,14 @@ public class ScreenResolutions : MonoBehaviour
     {
         Resolution resolution = resolutionList[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, true);
+    }
+
+    public void SetFullScreen(bool isFullScreen)
+    {
+        Screen.fullScreen = isFullScreen;
+        //using ternary operation to check for the value of the boolean. 1 active - 0 off
+        PlayerPrefs.SetInt("FULLSCREEN", isFullScreen ? 1 : 0);
+        Debug.Log(isFullScreen);
     }
 
 }
