@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,11 +28,11 @@ public class ScreenResolutions : MonoBehaviour
         //getting the current refresh rate and saving it to a variable of type float
         currentRefreshRate = Screen.currentResolution.refreshRate;
 
-
+        
         //cheking if my current monitor refresh rate is the same as the options in the array
-        //if the condition is true, the resolution will be added to the list
         for (int i = 0; i < resolutionArray.Length; i++)
         {
+            //if the condition is true, the resolution will be added to the list
             if (resolutionArray[i].refreshRate == currentRefreshRate)
             {
                 resolutionList.Add(resolutionArray[i]);
@@ -61,11 +58,10 @@ public class ScreenResolutions : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
-        
+
         resolutionDropdown.AddOptions(screenOptions);
 
         LoadScreenSettings();
-        
     }
 
     //this function will set the chosen resolution
@@ -77,13 +73,14 @@ public class ScreenResolutions : MonoBehaviour
 
         Resolution resolution = resolutionList[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, isFullScreen);
+
         PlayerPrefs.SetInt("RESOLUTION", resolutionIndex);
     }
 
     public void SetFullScreen(bool isFullScreen)
     {
         Debug.Log(isFullScreen);
-        
+
         Screen.fullScreen = isFullScreen;
 
         //using ternary operation to check for the value of the boolean. 1 active - 0 off
@@ -93,7 +90,7 @@ public class ScreenResolutions : MonoBehaviour
     public void LoadScreenSettings()
     {
         Debug.Log("Loading screen settings...");
-        
+
         //getting the values from keys
         int resolutionIndex = PlayerPrefs.GetInt("RESOLUTION");
 
@@ -104,11 +101,9 @@ public class ScreenResolutions : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, isFullScreen, resolution.refreshRate);
 
         checkMark.SetIsOnWithoutNotify(isFullScreen);
-
         resolutionDropdown.SetValueWithoutNotify(resolutionIndex);
 
         Debug.Log("Screen settings loaded.");
     }
-
 
 }
