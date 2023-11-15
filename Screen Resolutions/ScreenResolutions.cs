@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScreenResolutions : MonoBehaviour
 {
     [SerializeField] TMP_Dropdown resolutionDropdown;
+    [SerializeField] Toggle checkMark;
 
     private Resolution[] resolutionArray;
     private List<Resolution> resolutionList;
 
     private float currentRefreshRate;
-    private int currentResolutionIndex = 0;
+    private int currentResolutionIndex;
 
     void Start()
     {
@@ -57,30 +61,54 @@ public class ScreenResolutions : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
-
-        //adding the list of resolution strings to the dropdown menu
+        
         resolutionDropdown.AddOptions(screenOptions);
 
-        //setting the dropdown value to the current index
-        resolutionDropdown.value = currentResolutionIndex;
-        //this is needed to display values
-        resolutionDropdown.RefreshShownValue();
-
+        LoadScreenSettings();
+        
     }
 
     //this function will set the chosen resolution
     public void SetResolution(int resolutionIndex)
     {
+        Debug.Log("Setting resolution index: " + resolutionIndex);
+
+        bool isFullScreen = PlayerPrefs.GetInt("FULLSCREEN") == 1;
+
         Resolution resolution = resolutionList[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, true);
+        Screen.SetResolution(resolution.width, resolution.height, isFullScreen);
+        PlayerPrefs.SetInt("RESOLUTION", resolutionIndex);
     }
 
     public void SetFullScreen(bool isFullScreen)
     {
+        Debug.Log(isFullScreen);
+        
         Screen.fullScreen = isFullScreen;
+
         //using ternary operation to check for the value of the boolean. 1 active - 0 off
         PlayerPrefs.SetInt("FULLSCREEN", isFullScreen ? 1 : 0);
-        Debug.Log(isFullScreen);
     }
+
+    public void LoadScreenSettings()
+    {
+        Debug.Log("Loading screen settings...");
+        
+        //getting the values from keys
+        int resolutionIndex = PlayerPrefs.GetInt("RESOLUTION");
+
+        //here == 1 have a comparison purpose
+        bool isFullScreen = PlayerPrefs.GetInt("FULLSCREEN") == 1;
+
+        Resolution resolution = resolutionList[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, isFullScreen, resolution.refreshRate);
+
+        checkMark.SetIsOnWithoutNotify(isFullScreen);
+
+        resolutionDropdown.SetValueWithoutNotify(resolutionIndex);
+
+        Debug.Log("Screen settings loaded.");
+    }
+
 
 }
