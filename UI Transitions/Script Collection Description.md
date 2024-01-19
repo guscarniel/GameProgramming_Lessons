@@ -1,2 +1,2 @@
-# UI Trasitions Collection
-This collection gathers some tests of UI scripts.
+# UI Transitions Collection
+This folder gathers some UI scripts tests.
