@@ -77,7 +77,7 @@ public class InstantiatePieces : MonoBehaviour
         return listingPieces.Count;
     }
 
-    //debug purposes
+    //this method is for debugging purposes
     public string PrefabsStrings()
     {
         //declaring a new list
@@ -93,7 +93,7 @@ public class InstantiatePieces : MonoBehaviour
         return string.Join(", ", names);
     }
 
-    //getting the indexes so they can be remaped
+    //this method will pass a list of gameobjects and get their indexes
     public List<int> GetIndexesFromGameObjects(List<GameObject> gameObjects)
     {
         // Declarando uma nova lista para armazenar os índices
@@ -108,6 +108,7 @@ public class InstantiatePieces : MonoBehaviour
         return indexes; // Retorna a lista de índices
     }
 
+    //returning the indexes so they can be remaped later
     public List<int> ListOfIndexes()
     {
         return GetIndexesFromGameObjects(listingPieces);

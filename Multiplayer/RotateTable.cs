@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 public class RotateTable : MonoBehaviour
 {
@@ -33,15 +34,20 @@ public class RotateTable : MonoBehaviour
     //this function will pass a list and do the magic
     public void RotateList<T>(List<T> list)
     {
-        if (list.Count == 0) return; // Verifica se a lista não está vazia
+        //verifies if the list is populated
+        if (list.Count == 0) return;
 
-        T lastElement = list[list.Count - 1]; // Pega o último elemento
+        //takes the last element
+        T lastElement = list[list.Count - 1];
 
         for (int i = list.Count - 1; i > 0; i--)
         {
-            list[i] = list[i - 1]; // Move cada elemento para a direita
+            //moves each element to the right
+            list[i] = list[i - 1];
         }
-        list[0] = lastElement; // Coloca o último elemento na primeira posição
+
+        //the last element will be placed to the first position of the list
+        list[0] = lastElement;
     }
 
     public List<int> ActualIndexes()
@@ -52,7 +58,7 @@ public class RotateTable : MonoBehaviour
 
     public List<int> RotateIndexes()
     {
-        //creating a list so it can be passed as an input
+        //creating a list so it can be passed as input
         List<int> rotatedIndexes = ActualIndexes();
         RotateList(rotatedIndexes);
         
@@ -72,12 +78,14 @@ public class RotateTable : MonoBehaviour
 
     public void SpawnGridOnNewIndexes(List<GameObject> gameObjects)
     {
+        //debugging purposes
         if (gameObjects == null)
         {
             Debug.LogError("gameObjects is null");
             return;
         }
 
+        //debugging purposes
         if (gameObjects.Count == 0)
         {
             Debug.LogError("gameObjects list is empty");
@@ -86,16 +94,16 @@ public class RotateTable : MonoBehaviour
 
         for (int i = 0; i < rotatedOrderIndexes.Count && i < slots.Length;  i++)
         {
-            GameObject newPositions = Instantiate(gameObjects[i], this.transform.position, this.transform.rotation, slots[i]);
+            GameObject newPositions = Instantiate(gameObjects[i], slots[i].transform.position, slots[i].transform.rotation, slots[i]);
         }
     }
 
     public void SpawnNewGrid()
     {
-        //here it is necessary to create an instance of the class so it can be accessed
-        InstantiatePieces instantiatePiecesInstance = new InstantiatePieces();
+        List<GameObject> gamePrefabs = instantiatePieces.listingPieces;
         
-        List<GameObject> gamePrefabs = instantiatePiecesInstance.listingPieces;
+        //calling the method to instantiate the list of objects
         SpawnGridOnNewIndexes(gamePrefabs);
+        Debug.Log("SpawnNewGrid was called");
     }
 }
